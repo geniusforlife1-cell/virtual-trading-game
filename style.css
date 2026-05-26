@@ -1,0 +1,196 @@
+/* --- Global Resets & Theme --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Fixed Top Header --- */
+header {
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-bottom: 2px solid #2d2d2d;
+    text-align: center;
+}
+
+.header-content h2 {
+    color: #FFD700; /* Gold Coins */
+    font-size: 1.4rem;
+}
+
+#admin-badge {
+    background-color: #ff3333;
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* --- Main Content Window --- */
+.content-window {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    padding-bottom: 80px; /* Space so content isn't blocked by bottom nav */
+}
+
+h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+    border-left: 4px solid #FFD700;
+    padding-left: 8px;
+}
+
+/* --- Reusable Cards (Market, News, Earn) --- */
+.company-card, .news-item-card, .earn-card {
+    background-color: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+/* --- Market/Trade Specifics --- */
+.company-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.company-name {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.company-price {
+    color: #00ff88; /* Green for stock value */
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.trade-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.buy-btn { background-color: #00ff88; color: #121212; }
+.sell-btn { background-color: #ff3333; color: white; }
+
+/* --- Earn Tab Specifics --- */
+.earn-card h4 {
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+.earn-card p {
+    font-size: 0.9rem;
+    color: #aaaaaa;
+    margin-bottom: 10px;
+}
+.earn-card button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFD700;
+    color: #121212;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.referral-code {
+    background-color: #2d2d2d;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* --- Admin Panel Inputs --- */
+.admin-only {
+    background-color: #2a1a1a;
+    border: 1px dashed #ff3333;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.admin-only h4 { color: #ff6666; margin-bottom: 10px; }
+.admin-only input, .admin-only select, .admin-only textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #121212;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+}
+.admin-only button {
+    width: 100%;
+    padding: 8px;
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* --- Fixed Bottom Navigation Bar --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #1e1e1e;
+    border-top: 2px solid #2d2d2d;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    color: #888888;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-align: center;
+    width: 25%;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.nav-item.active {
+    color: #FFD700;
+    font-weight: bold;
+    border-top: 3px solid #FFD700;
+}
+
+/* --- Utilities --- */
+.hidden {
+    display: none !important;
+}
