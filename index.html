@@ -69,12 +69,27 @@
             <div id="user-portfolio-list">
                 </div>
 
-            <div id="admin-notify-controls" class="admin-only hidden">
-                <h4>✉️ Admin: Send Private Gift Card / Notification</h4>
-                <input type="text" id="target-user-email" placeholder="Target User Email">
-                <textarea id="admin-message" placeholder="Type message or paste gift card code here..."></textarea>
-                <button onclick="adminSendPrivateMessage()">Send Private Alert</button>
+            <div id="admin-company-controls" class="admin-only hidden">
+                <h4>🏢 Admin: Manage Companies & Prices</h4>
+                
+                <h5>Update Stock Price</h5>
+                <select id="admin-update-symbol">
+                    <option value="MSFT">MacroSoft (MSFT)</option>
+                    <option value="CHIP">Chipot-In (CHIP)</option>
+                    <option value="SPCY">SpaceY (SPCY)</option>
+                </select>
+                <input type="number" id="admin-new-price" placeholder="Enter New Price (e.g. 180)">
+                <button onclick="adminUpdatePrice()">Update Price Natively</button>
+                
+                <hr style="margin: 15px 0; border: 1px dashed #444;">
+
+                <h5>Create New Company</h5>
+                <input type="text" id="new-comp-name" placeholder="Company Name (e.g., Grape Inc)">
+                <input type="text" id="new-comp-symbol" placeholder="Ticker Symbol (e.g., GRPE)">
+                <input type="number" id="new-comp-price" placeholder="Starting Price (e.g., 100)">
+                <button onclick="adminCreateCompany()">Launch New Company</button>
             </div>
+
             
             <div class="user-inbox">
                 <h4>📥 My Inbox Alerts</h4>
@@ -84,13 +99,15 @@
 
     </main>
 
-    <nav class="bottom-nav">
+     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('trade')">📈<br>Trade</button>
         <button class="nav-item" onclick="switchTab('news')">📰<br>News</button>
         <button class="nav-item" onclick="switchTab('earn')">🎁<br>Earn</button>
         <button class="nav-item" onclick="switchTab('me')">👤<br>Me</button>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="app.js"></script>
 </body>
 </html>
+
