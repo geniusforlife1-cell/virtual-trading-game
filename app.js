@@ -7,17 +7,30 @@ const supabase = supabase.createClient(https://cfgsylupxkswowshofgm.supabase.co,
 // Test checking if setup works (prints to developer console)
 console.log("Supabase initialization complete.");
 
-// 1. Tab Switching Functionality
+// --- 1. Tab Switching Navigation Logic ---
 function switchTab(tabName) {
-    // Hide all panels
-    document.querySelectorAll('.app-panel').forEach(panel => panel.classList.add('hidden'));
-    // Remove active style from all nav buttons
-    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-    
-    // Show selected panel
-    document.getElementById(`panel-${tabName}`).classList.remove('hidden');
-    // Highlight active tab button
-    event.currentTarget.classList.add('active');
+    // A. Find all sections with the class 'app-panel' and hide them
+    const panels = document.querySelectorAll('.app-panel');
+    panels.forEach(panel => {
+        panel.classList.add('hidden');
+    });
+
+    // B. Find all navigation buttons and remove the 'active' glowing style
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // C. Show the specific panel the user clicked on
+    const targetPanel = document.getElementById(`panel-${tabName}`);
+    if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+    }
+
+    // D. Add the glowing active gold line to the clicked button
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
 }
 
 // 2. Admin Logic Example: News Affecting Prices Directly
@@ -40,4 +53,63 @@ function adminPublishNews() {
     </div>` + feed.innerHTML;
     
     alert(`News published! Stock price adjusted to ${companyStockPrice} coins.`);
+}
+// 1. Function to update an existing company's price manually
+async function adminUpdatePrice() {
+    const symbol = document.getElementById('admin-update-symbol').value;
+    const newPrice = parseInt(document.getElementById('admin-new-price').value);
+
+    if (!newPrice || isNaN(newPrice)) {
+        return alert("Please enter a valid numbers-only price.");
+    }
+
+    // Direct Supabase Update Query
+    const { data, error } = await supabase
+        .from('companies')
+        .update({ current_price: newPrice })
+        .eq('symbol', symbol);
+
+    if (error) {
+        alert("Error updating price: " + error.message);
+    } else {
+        alert(`Successfully set ${symbol} price to ${newPrice} Coins!`);
+        // Refresh the marketplace layout visually
+        fetchMarketPrices(); 
+    }
+}
+
+// 2. Function to register a brand new company into the database
+async function adminCreateCompany() {
+    const name = document.getElementById('new-comp-name').value.trim();
+    const symbol = document.getElementById('new-comp-symbol').value.trim().toUpperCase();
+    const startPrice = parseInt(document.getElementById('new-comp-price').value);
+
+    if (!name || !symbol || isNaN(startPrice)) {
+        return alert("Please fill out all fields correctly.");
+    }
+
+    // Direct Supabase Insert Query
+    const { data, error } = await supabase
+        .from('companies')
+        .insert([{ name: name, symbol: symbol, current_price: startPrice }]);
+
+    if (error) {
+        alert("Error creating company: " + error.message);
+    } else {
+        alert(`Successfully launched ${name} (${symbol}) into the market!`);
+        
+        // Dynamically add the new company to your admin selector dropdown choices
+        const selectDropdown = document.getElementById('admin-update-symbol');
+        const opt = document.createElement('option');
+        opt.value = symbol;
+        opt.innerHTML = `${name} (${symbol})`;
+        selectDropdown.appendChild(opt);
+        
+        // Clear out input boxes
+        document.getElementById('new-comp-name').value = '';
+        document.getElementById('new-comp-symbol').value = '';
+        document.getElementById('new-comp-price').value = '';
+
+        fetchMarketPrices();
+    }
 }
